@@ -8,17 +8,16 @@ class Searchbar extends Component {
   };
 
   handleNameChange = (e) => {
-    this.setState({ imgName: e.currentTarget.value.toLowerCase() });
+    this.setState({ imgName: e.target.value.toString().toLowerCase() });
   };
   handleSubmit = (e) => {
-    e.preventDefault();
-
     if (this.state.imgName.trim() === "") {
       return toast.error("Write name for searching image!");
     }
 
     this.props.onSubmit(this.state.imgName);
     this.setState({ imgName: "" });
+    e.preventDefault();
   };
 
   render() {

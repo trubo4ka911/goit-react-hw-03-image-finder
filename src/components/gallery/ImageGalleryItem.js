@@ -2,28 +2,12 @@ import PropTypes from "prop-types";
 import {} from "./ImageGallery.styled";
 const GalleryItem = ({ url, tags, onImageOpen, id }) => {
   return (
-    <li className="ImageGalleryItem">
-      <img
-        className="ImageGalleryItem-image"
-        src={url}
-        alt={tags || "photo"}
-        loading="lazy"
-        onClick={onImageOpen}
-        id={id}
-      />
+    <li>
+      <img src={url} alt={tags || "photo"} onClick={onImageOpen} id={id} />
     </li>
   );
 };
-GalleryItem.propTypes = {};
+GalleryItem.propTypes = {
+  url: PropTypes.string.isRequired,
+};
 export default GalleryItem;
-
-// <li className="ImageGalleryItem">
-//   <img
-//     className="ImageGalleryItem-image"
-//     src={url}
-//     alt={tags || "wonderfull photo"}
-//     loading="lazy"
-//     onClick={onImageOpen}
-//     id={id}
-//   />
-// </li>;
