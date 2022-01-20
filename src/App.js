@@ -4,37 +4,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Searchbar from "./components/searchbar/Searchbar";
 import ImageGallery from "./components/gallery/ImageGallery";
-// function App() {
-//   return (
-//     <>
-//       <Container>
-//         <Searchbar></Searchbar>
-//       </Container>
-//     </>
-//     // <div className="App">
-//     //   <header className="App-header">
-//     //     <img src={logo} className="App-logo" alt="logo" />
-//     //     <p>
-//     //       Edit <code>src/App.js</code> and save to reload.
-//     //     </p>
-//     //     <a
-//     //       className="App-link"
-//     //       href="https://reactjs.org"
-//     //       target="_blank"
-//     //       rel="noopener noreferrer"
-//     //     >
-//     //       Learn React
-//     //     </a>
-//     //   </header>
-//     // </div>
-//   );
-// }
+import Modal from "./components/modal/Modal";
+import LoadMoreBtn from "./components/button/Button";
 
 export default class App extends Component {
-  // state = {
-  //   imgName: "",
-  // };
-
   state = {
     imgName: "",
     images: [],
@@ -42,7 +15,15 @@ export default class App extends Component {
     total: 0,
     error: null,
     loading: false,
+    showModal: false,
+    modalContent: "",
   };
+
+  // toggleModal = () => {
+  //   this.setState(({ showModal }) => ({
+  //     showModal: !showModal,
+  //   }));
+  // };
 
   fetchImages = (imgName) => {
     this.setState({ loading: true, page: 1, images: [] });
@@ -96,21 +77,34 @@ export default class App extends Component {
     this.fetchImages(imgName);
     this.setState({ imgName });
   };
+  toggleModal = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
 
+  getItemContent = (modalContent) => {
+    console.log(modalContent);
+    this.setState({ modalContent, showModal: true });
+  };
   render() {
-    const { loading, images } = this.state;
+    const { loading, images, showModal, modalContent } = this.state;
     return (
       <>
+        {showModal && <Modal onClose={this.toggleModal} data={modalContent} />}
         <Searchbar onSubmit={this.handleFormSubmit} />
         {!loading && !images.length ? (
           <div>write smt!</div>
         ) : (
           <>
-            <ImageGallery items={images} />
+            <ImageGallery
+              items={images}
+              onOpen={this.toggleModal}
+              getItemContent={this.getItemContent}
+            />
+            <LoadMoreBtn onClick={this.loadMore} />
             {loading && <div>Loading...</div>}
           </>
         )}
-        <button onClick={this.loadMore}>Load More</button>
+        {/* <button onClick={this.loadMore}>Load More</button> */}
         <ToastContainer
           position="top-center"
           theme="colored"

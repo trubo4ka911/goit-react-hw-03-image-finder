@@ -1,13 +1,21 @@
 import PropTypes from "prop-types";
-import {} from "./ImageGallery.styled";
-const GalleryItem = ({ url, tags, onImageOpen, id }) => {
+import { ImageItem, Image } from "./ImageGallery.styled";
+const GalleryItem = ({ url, tags, id, largeImageURL, getItemContent }) => {
   return (
-    <li>
-      <img src={url} alt={tags || "photo"} onClick={onImageOpen} id={id} />
-    </li>
+    <ImageItem>
+      <Image
+        src={url}
+        alt={tags || "photo"}
+        id={id}
+        onClick={() => getItemContent(largeImageURL)}
+      />
+    </ImageItem>
   );
 };
 GalleryItem.propTypes = {
   url: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  getItemContent: PropTypes.func.isRequired,
 };
 export default GalleryItem;

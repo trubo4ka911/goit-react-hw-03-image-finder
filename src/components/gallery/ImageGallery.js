@@ -1,16 +1,25 @@
 import PropTypes from "prop-types";
 import GalleryItem from "./ImageGalleryItem";
+import { GalleryList } from "./ImageGallery.styled";
 
-const ImageGallery = ({ items }) => {
+const ImageGallery = ({ items, getItemContent }) => {
   return (
-    <ul className="ImageGallery">
-      {items.map(({ id, previewURL, tags }) => (
-        <GalleryItem key={id} url={previewURL} id={id} tags={tags} />
+    <GalleryList>
+      {items.map(({ id, webformatURL, tags, largeImageURL }) => (
+        <GalleryItem
+          key={id}
+          url={webformatURL}
+          id={id}
+          tags={tags}
+          largeImageURL={largeImageURL}
+          getItemContent={getItemContent}
+        />
       ))}
-    </ul>
+    </GalleryList>
   );
 };
 ImageGallery.propTypes = {
   items: PropTypes.array,
+  largeImageURL: PropTypes.string.isRequired,
 };
 export default ImageGallery;

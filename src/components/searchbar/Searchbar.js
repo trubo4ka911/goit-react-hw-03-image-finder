@@ -1,6 +1,8 @@
 import { Component } from "react";
 import propTypes from "prop-types";
 import { toast } from "react-toastify";
+import { SearchForm, SearchInput, SearchBtn } from "./Searchbar.styled";
+import { FcSearch } from "react-icons/fc";
 
 class Searchbar extends Component {
   state = {
@@ -23,12 +25,12 @@ class Searchbar extends Component {
   render() {
     return (
       <header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </button>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchBtn type="submit">
+            <FcSearch />
+          </SearchBtn>
 
-          <input
+          <SearchInput
             className="input"
             type="text"
             name="imgName"
@@ -38,7 +40,7 @@ class Searchbar extends Component {
             autoFocus
             placeholder="Search images and photos"
           />
-        </form>
+        </SearchForm>
       </header>
     );
   }
