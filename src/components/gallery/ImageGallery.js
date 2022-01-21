@@ -20,6 +20,6 @@ const ImageGallery = ({ items, getItemContent }) => {
 };
 ImageGallery.propTypes = {
   items: PropTypes.array,
-  largeImageURL: PropTypes.string.isRequired,
+  getItemContent: PropTypes.func,
 };
 export default ImageGallery;

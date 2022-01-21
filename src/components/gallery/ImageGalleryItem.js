@@ -14,7 +14,7 @@ const GalleryItem = ({ url, tags, id, largeImageURL, getItemContent }) => {
 };
 GalleryItem.propTypes = {
   url: PropTypes.string.isRequired,
-  largeImageURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string,
   id: PropTypes.number.isRequired,
   getItemContent: PropTypes.func.isRequired,
 };

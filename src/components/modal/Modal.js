@@ -30,14 +30,10 @@ export default class Modal extends Component {
 
   render() {
     return createPortal(
-      <ModalBackdrop onClick={this.handleBackdropClick}>
-        <ModalContent>
-          <ModalImg src={this.props.data} alt={"photo"} />
-        </ModalContent>
-        <ModalBtn type="button" onClick={this.props.onClose}>
-          <MdClose />
-        </ModalBtn>
-      </ModalBackdrop>,
+      <div>
+        <ModalBackdrop onClick={this.handleBackdropClick}></ModalBackdrop>
+        <ModalImg src={this.props.data} alt={"photo"} />
+      </div>,
       modalRoot
     );
   }

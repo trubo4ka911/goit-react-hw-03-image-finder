@@ -1,4 +1,3 @@
-import "./App.css";
 import { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,7 +36,6 @@ export default class App extends Component {
         return Promise.reject(new Error(`No images with name ${imgName}`));
       })
       .then((newImages) => {
-        console.log(newImages);
         this.setState({
           images: newImages.hits,
           total: newImages.total,
@@ -73,7 +71,6 @@ export default class App extends Component {
   };
 
   handleFormSubmit = (imgName) => {
-    console.log(imgName);
     this.fetchImages(imgName);
     this.setState({ imgName });
   };
@@ -82,27 +79,25 @@ export default class App extends Component {
   };
 
   getItemContent = (modalContent) => {
-    console.log(modalContent);
     this.setState({ modalContent, showModal: true });
   };
   render() {
-    const { loading, images, showModal, modalContent } = this.state;
+    const { loading, images, showModal, modalContent, total, page } =
+      this.state;
     return (
       <>
         {showModal && <Modal onClose={this.toggleModal} data={modalContent} />}
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {!loading && !images.length ? (
-          <div>write smt!</div>
-        ) : (
-          <>
-            <ImageGallery
-              items={images}
-              onOpen={this.toggleModal}
-              getItemContent={this.getItemContent}
-            />
-            <LoadMoreBtn onClick={this.loadMore} />
-            {loading && <div>Loading...</div>}
-          </>
+        {!!images.length && (
+          <ImageGallery
+            items={images}
+            onOpen={this.toggleModal}
+            getItemContent={this.getItemContent}
+          />
+        )}
+        {loading && <div>Loading...</div>}
+        {!!images.length && total >= page * 12 && (
+          <LoadMoreBtn onLoadMore={this.loadMore} />
         )}
         {/* <button onClick={this.loadMore}>Load More</button> */}
         <ToastContainer
