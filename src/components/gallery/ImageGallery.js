@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import GalleryItem from "./ImageGalleryItem";
+import GalleryItem from "./GalleryItem";
 import { GalleryList } from "./ImageGallery.styled";
 
 const ImageGallery = ({ items, getItemContent }) => {
