@@ -21,3 +21,11 @@ export const ModalImg = styled.img`
   height: 80%;
   border-radius: 10px;
 `;
+
+export const ModalContainer = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+`;

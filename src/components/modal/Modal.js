@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { MdClose } from "react-icons/md";
 import {
   ModalBackdrop,
-  ModalContent,
+  ModalContainer,
   ModalImg,
   ModalBtn,
 } from "./Modal.styled";
@@ -30,10 +30,10 @@ export default class Modal extends Component {
 
   render() {
     return createPortal(
-      <div>
+      <ModalContainer>
         <ModalBackdrop onClick={this.handleBackdropClick}></ModalBackdrop>
         <ModalImg src={this.props.data} alt={"photo"} />
-      </div>,
+      </ModalContainer>,
       modalRoot
     );
   }

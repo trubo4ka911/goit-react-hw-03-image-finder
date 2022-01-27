@@ -19,42 +19,33 @@ export default class App extends Component {
     modalContent: "",
   };
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.state.page !== prevState.page) {
-      this.setState({ loading: true });
-      getImages(this.state.imgName, this.state.page)
-        .then((newImages) => {
-          this.setState({
-            images: [...this.state.images, ...newImages.hits],
-            total: newImages.total,
-            loading: false,
-          });
-        })
-        .catch((error) => this.setState({ error, loading: false }));
-    }
-    if (this.state.imgName !== prevState.imgName) {
-      this.fetchImages(this.state.imgName);
+    if (
+      this.state.page !== prevState.page ||
+      this.state.imgName !== prevState.imgName
+    ) {
+      this.fetchImages();
     }
   };
 
-  fetchImages = (imgName) => {
-    this.setState({ loading: true, page: 1, images: [] });
-    getImages(imgName, 1)
+  fetchImages = () => {
+    this.setState({ loading: true });
+    getImages(this.state.imgName, this.state.page)
       .then((newImages) => {
-        this.setState({
-          images: newImages.hits,
+        this.setState((prevState) => ({
+          images: [...prevState.images, ...newImages.hits],
           total: newImages.total,
           loading: false,
-        });
+        }));
       })
       .catch((error) => this.setState({ error, loading: false }));
   };
 
   loadMore = () => {
-    this.setState({ page: this.state.page + 1 });
+    this.setState((prevState) => ({ page: prevState.page + 1 }));
   };
 
   handleFormSubmit = (imgName) => {
-    this.setState({ imgName });
+    this.setState({ imgName, page: 1, images: [], total: 0 });
   };
   toggleModal = () => {
     this.setState({ showModal: !this.state.showModal });
@@ -71,17 +62,12 @@ export default class App extends Component {
         {showModal && <Modal onClose={this.toggleModal} data={modalContent} />}
         <Searchbar onSubmit={this.handleFormSubmit} />
         {!!images.length && (
-          <ImageGallery
-            items={images}
-            onOpen={this.toggleModal}
-            getItemContent={this.getItemContent}
-          />
+          <ImageGallery items={images} getItemContent={this.getItemContent} />
         )}
         {loading && <div>Loading...</div>}
         {!!images.length && total >= page * 12 && (
           <LoadMoreBtn onLoadMore={this.loadMore} />
         )}
-        {/* <button onClick={this.loadMore}>Load More</button> */}
         <ToastContainer
           position="top-center"
           theme="colored"
